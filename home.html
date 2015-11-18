@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<title>Clock</title>
+
+<style>
+#clock_time{
+	position:relative;
+	box-shadow:0 0 5px #fff;
+	width:170px;
+	height:60px;
+	border:2px solid #fff;
+	left:5%;
+	top:7%;	
+}
+
+#curr_time, #today_date, #today_weather{
+	position:relative;
+	left:5%;
+	top:5%;	
+	color:#fff;
+}
+
+body{
+	background:rgb(19,19,21);	
+	padding-top:5%;
+}
+
+
+#clock, #calender, #weather{
+	background:#000;
+	padding:5%;
+	border:2px solid #444;
+	float:left;
+	margin:5%;
+	cursor:pointer;
+	box-shadow:0 0 5px #000;
+
+}
+
+h1{
+	color:#fff;
+	text-align:center;
+}
+</style>
+
+</head>
+<body>
+
+<h1 style="text-decoration:underline;">	Widgets	</h1>
+
+<a href="index.html">
+	<div id="clock">	
+			<h1 id="curr_time">00:00:00</h1>
+	</div>
+</a>
+
+<a href="calender.html" >
+	<div id="calender">	
+		<h1 id="today_date">00/00/00</h1>
+	</div>
+</a>
+
+<a href="weather.html">
+	<div id="weather">	
+		<h1 id="today_weather">Getting Data..</h1>
+	</div>
+</a>
+
+<script>
+
+runClock();
+setInterval(runClock,1000);
+
+function runClock(){
+	times = document.getElementById("curr_time");
+    var d = new Date();
+
+	hour = d.getHours()*30;
+	min = d.getMinutes()*6;
+	sec = d.getSeconds()*6;
+	
+	times.innerHTML  = d.getHours()+" : "+ d.getMinutes() +" : "+d.getSeconds();
+	document.getElementById("today_date").innerHTML  = d.getDate()+" / "+ (d.getMonth()+1) +" / "+d.getFullYear();
+	
+	var xmlhttp = new XMLHttpRequest();//da4b84c6b1ec7328
+	var url = "http://api.wunderground.com/api/0729c15190c7e51d/conditions/q/PK/Islamabad.json";
+
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var myArr = JSON.parse(xmlhttp.responseText);
+			//myFunction(myArr);
+			document.getElementById("today_weather").innerHTML =  myArr.current_observation.temperature_string ;
+		}
+	};
+
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+
+	
+	
+}
+</script>
+
+  </div>
+</body>
+</html>

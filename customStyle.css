@@ -1,0 +1,41 @@
+#clock_div{
+	position:fixed;
+	left:35%;
+	top:20%;
+	border-radius:50%;
+	background:#eee;				/*rgb(230,239,246);*/
+	width:30%;
+	height:60%;
+	border:2px solid #fff;
+/*	box-shadow:0 0 7px #fff;*/
+	
+}
+
+body{
+	background:rgb(19,19,21);
+}
+
+#curr_time{
+	position:fixed;
+	left:45%;
+	top:87%;	
+	color:#fff;
+}
+
+#clock_time{
+	position:fixed;
+	box-shadow:0 0 5px #fff;
+	width:170px;
+	height:60px;
+	border:2px solid #fff;
+	left:44%;
+	top:88%;	
+}
+a{
+	text-decoration:none;
+	position:fixed;
+	left:4%;
+	top:8%;	
+	color:#fff;
+
+}

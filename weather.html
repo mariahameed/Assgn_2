@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<title>Weather</title>
+<link rel="stylesheet" type="text/css" href="customStyle.css"></link>
+
+<style>
+
+#today_date{
+	position:relative;
+	left:5%;
+	top:5%;	
+	color:#fff;
+}
+
+body{
+	background:rgb(19,19,21);	
+}
+
+
+#WeatherDIV{
+	position:fixed;
+	top:20%;
+	left:27%;
+	background:#000;
+	padding:2%;
+	padding-top:0;
+	padding-bottom:0;
+	border:2px solid #444;
+	float:left;
+}
+
+	#Weather_p{
+		color:#eee;
+	}
+
+	table{
+		border:1px solid #000;
+	}
+	td{
+		padding:4px;
+		padding-left:10px;
+	}
+	
+	#current_temp
+	{
+		border:1px solid #000;
+		font-size:350%;
+		padding-left:10%;
+	}
+	#unit{
+		font-size:50%;
+		display:inline;
+	}
+</style>
+
+
+
+</head>
+<body>
+
+<a href="home.html">Home</a>
+
+<div id="WeatherDIV">	<p id="Weather_p"></p>	</div>
+
+<script>
+
+	document.getElementById("Weather_p").innerHTML =  "Getting Data...";
+	var xmlhttp = new XMLHttpRequest();//da4b84c6b1ec7328
+	var url = "http://api.wunderground.com/api/0729c15190c7e51d/conditions/q/PK/Islamabad.json";
+
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var myArr = JSON.parse(xmlhttp.responseText);
+			myFunction(myArr);
+		}
+	};
+
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+
+function myFunction(arr) {
+
+	//var weather_obj = '{  "response": {   "version": "0.1",  "termsofService": "http://www.wunderground.com/weather/api/d/terms.html",  "features": {  "conditions": 1  }  },  "current_observation": {  "image": {  "url": "http://icons-ak.wxug.com/graphics/wu2/logo_130x80.png",  "title": "Weather Underground",  "link": "http://www.wunderground.com"  },  "display_location": {  "full": "San Francisco, CA",  "city": "San Francisco",  "state": "CA",  "state_name": "California",  "country": "US",  "country_iso3166": "US",  "zip": "94101",  "latitude": "37.77500916",  "longitude": "-122.41825867",  "elevation": "47.00000000"  },  "observation_location": {  "full": "SOMA - Near Van Ness, San Francisco, California",  "city": "SOMA - Near Van Ness, San Francisco",  "state": "California",  "country": "US",  "country_iso3166": "US",  "latitude": "37.773285",  "longitude": "-122.417725",  "elevation": "49 ft"  },  "estimated": {},  "station_id": "KCASANFR58",  "observation_time": "Last Updated on June 27, 5:27 PM PDT",  "observation_time_rfc822": "Wed, 27 Jun 2012 17:27:13 -0700",  "observation_epoch": "1340843233",  "local_time_rfc822": "Wed, 27 Jun 2012 17:27:14 -0700",  "local_epoch": "1340843234",  "local_tz_short": "PDT",  "local_tz_long": "America/Los_Angeles",  "local_tz_offset": "-0700",  "weather": "Partly Cloudy",  "temperature_string": "66.3 F (19.1 C)",  "temp_f": 66.3,  "temp_c": 19.1,  "relative_humidity": "65%",  "wind_string": "From the NNW at 22.0 MPH Gusting to 28.0 MPH",  "wind_dir": "NNW",  "wind_degrees": 346,  "wind_mph": 22.0,  "wind_gust_mph": "28.0",  "wind_kph": 35.4,  "wind_gust_kph": "45.1",  "pressure_mb": "1013",  "pressure_in": "29.93",  "pressure_trend": "+",  "dewpoint_string": "54 F (12 C)",  "dewpoint_f": 54,  "dewpoint_c": 12,  "heat_index_string": "NA",  "heat_index_f": "NA",  "heat_index_c": "NA",  "windchill_string": "NA",  "windchill_f": "NA",  "windchill_c": "NA",  "feelslike_string": "66.3 F (19.1 C)",  "feelslike_f": "66.3",  "feelslike_c": "19.1",  "visibility_mi": "10.0",  "visibility_km": "16.1",  "solarradiation": "",  "UV": "5",  "precip_1hr_string": "0.00 in ( 0 mm)",  "precip_1hr_in": "0.00",  "precip_1hr_metric": " 0",  "precip_today_string": "0.00 in (0 mm)",  "precip_today_in": "0.00",  "precip_today_metric": "0",  "icon": "partlycloudy",  "icon_url": "http://icons-ak.wxug.com/i/c/k/partlycloudy.gif",  "forecast_url": "http://www.wunderground.com/US/CA/San_Francisco.html",  "history_url": "http://www.wunderground.com/history/airport/KCASANFR58/2012/6/27/DailyHistory.html",  "ob_url": "http://www.wunderground.com/cgi-bin/findweather/getForecast?query=37.773285,-122.417725"  }}';
+	weather_obj = arr;
+	//alert(weather_obj.current_observation.image.url);
+	
+	var res = "<table><tr>	 <td colspan=2 rowspan=6 id='current_temp'>"+ weather_obj.current_observation.temp_f+" <p id='unit'>F</p></td>	</tr>"
+	res += "<tr><td>City</td><td>" + weather_obj.current_observation.observation_location.city +"<br/></td></tr>";
+	res += "<tr><td>State: </td><td>" + weather_obj.current_observation.display_location.state_name +"<br/><td></tr>";
+	res += "<tr><td>Latitude</td><td>" +  weather_obj.current_observation.observation_location.latitude +"<br/></td></tr>";
+	res += "<tr><td>Longitude</td><td>" +  weather_obj.current_observation.observation_location.longitude +"<br/></td></tr>";
+	res += "<tr><td>Elevation</td><td>" +  weather_obj.current_observation.observation_location.elevation +"<br/></td></tr>";
+	
+	res +=  "<tr><td>Observation Time: </td><td>" + weather_obj.current_observation.observation_time_rfc822 +"<br/></td>";
+	res +=  "<td>Weather: </td><td>" +  weather_obj.current_observation.weather +"<br/></td></tr>";
+	res +=  "<tr><td>Temperature: </td><td>" +  weather_obj.current_observation.temperature_string +"<br/></td>";
+	res +=  "<td>Humidity: </td><td>" +  weather_obj.current_observation.relative_humidity +"<br/></td></tr>";
+	res +=  "<tr><td>Wind: </td><td>" +  weather_obj.current_observation.wind_mph +" MPH<br/></td></tr>";
+		
+	//document.write(res);
+	document.getElementById("Weather_p").innerHTML = res;
+	//alert(res);
+	}
+//);
+</script>
+</body>
+</html>
